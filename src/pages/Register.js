@@ -1,19 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { Redirect } from 'react-router-dom'
 import RegLogForm from '../components/RegLogForm'
+import API from '../axios'
 
-const handleRegister = (event) => {
-	event.preventDefault()
-	let username = document.getElementById("email-field")
-	let password = document.getElementById("password-field")
-	console.log(username.value, password.value)
-	console.log("Register User!!")
-}
 
 const Register = () => {
+
+	const [redirect, setRedirect] = useState(false)
+
+	const handleRegister = event => {
+		event.preventDefault()
+		let email = document.getElementById('email-field')
+		let password = document.getElementById('password-field')
+		API.post('/register', {
+			email: `${email.value}`,
+			password: `${password.value}`
+		})
+			.then(res => console.log('Status:', res.status, res.data, '!'))
+			.then(setRedirect(true))
+			.catch(err => console.log(err))
+	}
+
+
+	if (redirect) {
+		return(<Redirect to={{ pathname: '/login' }} />)
+	}
 	return (
 		<>
 			<h1>Register</h1>
-			<RegLogForm link={'/login'} page="register" handleRegister={handleRegister} />
+			<RegLogForm
+				link={'/login'}
+				page='register'
+				handleRegister={handleRegister}
+			/>
 		</>
 	)
 }
