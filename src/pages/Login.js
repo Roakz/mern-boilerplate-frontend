@@ -26,7 +26,7 @@ const Login = (props) => {
 			})
 			.catch(err => {
 				if (err.response && err.response.status === 401) {
-					setFlash(err.response.data)
+					setFlash(err.response.data.message)
 					username.value = ''
 					password.value = ''
 				}
