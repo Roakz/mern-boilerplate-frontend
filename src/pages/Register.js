@@ -10,10 +10,10 @@ const Register = () => {
 
 	const handleRegister = event => {
 		event.preventDefault()
-		let email = document.getElementById('email-field')
+		let username = document.getElementById('email-field')
 		let password = document.getElementById('password-field')
 		API.post('/register', {
-			email: `${email.value}`,
+			username: `${username.value}`,
 			password: `${password.value}`
 		})
 			.then(res => console.log('Status:', res.status, res.data, '!'))
